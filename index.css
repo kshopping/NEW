@@ -1,0 +1,102 @@
+/* ===== 1단계: 모바일/앱 레이아웃 정리 ===== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f5f6fa;
+}
+
+/* ---------- 헤더 ---------- */
+
+#fixed-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+#fixed-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ---------- 카테고리 (핵심) ---------- */
+
+#category-area {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 8px;
+  background: #fff;
+}
+
+#category-area::-webkit-scrollbar {
+  display: none;
+}
+
+#category-area > * {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+/* ---------- 본문 ---------- */
+
+#wrap {
+  padding-top: 120px;
+}
+
+/* ---------- 상품 영역 (핵심) ---------- */
+
+#product-area {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 화면 넓어질 때 */
+@media (min-width: 600px) {
+  #product-area {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  #product-area {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- 상품 카드 ---------- */
+/* 🔴 padding 제거 (이미지 좌측 쏠림 원인) */
+.product-card {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+}
+
+/* 🔴 이미지 풀폭 고정 */
+.product-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
