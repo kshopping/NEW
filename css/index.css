@@ -1,6 +1,8 @@
 /* ===== 1단계: 모바일/앱 레이아웃 정리 ===== */
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -8,22 +10,29 @@ body {
   background: #f5f6fa;
 }
 
-/* ---------- 헤더 ---------- */
+/* ===============================
+   헤더 (기준 통일)
+================================ */
 
 #fixed-header {
   position: fixed;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 1000px;
   background: #ffffff;
   border-bottom: 1px solid #ddd;
   z-index: 1000;
 }
 
 #fixed-header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
+  padding: 0;
 }
 
 .header-title {
@@ -31,15 +40,19 @@ body {
   font-weight: bold;
 }
 
-/* ---------- 카테고리 (핵심) ---------- */
+/* ===============================
+   카테고리
+================================ */
 
 #category-area {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 8px;
-  padding: 8px;
+  padding: 8px 0;
   background: #fff;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 #category-area::-webkit-scrollbar {
@@ -55,24 +68,27 @@ body {
   font-size: 14px;
 }
 
-/* ---------- 본문 ---------- */
+/* ===============================
+   메인 컨테이너 (중요)
+================================ */
 
 #wrap {
-  padding-top: 120px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 132px 12px 0; /* 헤더+카테고리 높이 */
 }
 
-/* ---------- 상품 영역 (핵심) ---------- */
+/* ===============================
+   상품 영역
+================================ */
 
 #product-area {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  padding: 12px;
-  max-width: 1000px;
-  margin: 0 auto;
+  padding: 12px 0;
 }
 
-/* 화면 넓어질 때 */
 @media (min-width: 600px) {
   #product-area {
     grid-template-columns: repeat(3, 1fr);
@@ -85,38 +101,42 @@ body {
   }
 }
 
-/* ---------- 상품 카드 ---------- */
-/* 🔴 padding 제거 (이미지 좌측 쏠림 원인) */
+/* ===============================
+   상품 카드
+================================ */
+
 .product-card {
   background: white;
   border-radius: 12px;
-  padding: 0;
-}
-
-/* 🔴 이미지 풀폭 고정 */
-.product-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-.product-card > * {
-  padding: 0;
-  margin: 0;
-}
-
-.product-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-.product-card {
   position: relative;
+}
+
+.product-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-card > * {
+  padding: 8px 12px;
 }
 
 .product-badge {
   position: absolute;
   top: 8px;
   left: 8px;
+}
+
+.product-badge img {
+  width: 40px;
+  height: 40px;
+}
+.product-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  height: 34px; /* 2줄 고정 */
+  overflow: hidden;
 }
