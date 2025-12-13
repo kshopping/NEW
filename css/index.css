@@ -140,3 +140,28 @@ body {
   height: 34px; /* 2줄 고정 */
   overflow: hidden;
 }
+/* ===============================
+   ✅ 앱(WebView)에서만 터지는 텍스트/박스 overflow 방지
+   (웹에도 무해)
+================================ */
+
+/* 배너/특가/계좌 박스는 컨테이너 폭 100%로 강제 */
+#banner-area,
+#today-deal,
+.bank-info-box,
+#product-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 계좌번호 줄바꿈 강제 (박스 밖으로 튀는 문제 해결) */
+#bankDynamic {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 혹시 bank-info-box 내부가 flex면 텍스트가 줄바꿈 안되는 경우가 있어서 안전장치 */
+.bank-text, #bankDynamic {
+  min-width: 0;
+}
