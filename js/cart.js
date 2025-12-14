@@ -1,31 +1,17 @@
 /* ===========================================================
-   🚫 빈 장바구니 진입 차단 (가장 먼저 실행)
-   - UI 그리기 전에 바로 메인으로 이동
-=========================================================== */
-const __cartBlockCheck = JSON.parse(localStorage.getItem("cartItems") || "[]");
-
-if (!Array.isArray(__cartBlockCheck) || __cartBlockCheck.length === 0) {
-  location.href = "index.html";
-}
-
-/* ===========================================================
    🛒 장바구니 로드
 =========================================================== */
 function loadCart() {
   const cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
-  const listArea = document.getElementById("cartList");
-  const totalArea = document.getElementById("cartTotal");
 
-  // 장바구니 비었을 때 (이론상 여기까지 올 일 없음)
-  if (cart.length === 0) {
-    listArea.innerHTML = `
-      <div style="text-align:center; padding:40px 0; color:#666; font-size:18px;">
-        🛒 장바구니가 비어 있습니다.
-      </div>
-    `;
-    totalArea.innerHTML = "";
+  // ✅ 빈 장바구니면 즉시 메인으로 이동 (UI 그리지 않음)
+  if (!Array.isArray(cart) || cart.length === 0) {
+    location.replace("index.html");
     return;
   }
+
+  const listArea = document.getElementById("cartList");
+  const totalArea = document.getElementById("cartTotal");
 
   let html = "";
   let totalPrice = 0;
@@ -72,7 +58,6 @@ window.changeQty = function (index, diff) {
   if (cart[index].qty < 1) cart[index].qty = 1;
 
   localStorage.setItem("cartItems", JSON.stringify(cart));
-
   loadCart();
 
   if (window.updateCartCount) updateCartCount();
@@ -87,7 +72,6 @@ window.removeItem = function (index) {
 
   cart.splice(index, 1);
   localStorage.setItem("cartItems", JSON.stringify(cart));
-
   loadCart();
 
   if (window.updateCartCount) updateCartCount();
@@ -99,6 +83,7 @@ window.removeItem = function (index) {
 =========================================================== */
 document.getElementById("goOrder").addEventListener("click", () => {
   const cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
   if (cart.length === 0) {
     alert("장바구니가 비어 있습니다.");
     return;
