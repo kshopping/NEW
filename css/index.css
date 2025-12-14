@@ -1,12 +1,7 @@
-/* ===== 기본 설정 ===== */
+/* ===== 1단계: 모바일/앱 레이아웃 정리 ===== */
 
 * {
   box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  overflow-x: hidden;
 }
 
 body {
@@ -16,7 +11,7 @@ body {
 }
 
 /* ===============================
-   헤더
+   헤더 (기준 통일)
 ================================ */
 
 #fixed-header {
@@ -37,6 +32,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0;
 }
 
 .header-title {
@@ -50,10 +46,17 @@ body {
 
 #category-area {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   gap: 8px;
-  padding: 8px;
+  padding: 8px 0;
   background: #fff;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#category-area::-webkit-scrollbar {
+  display: none;
 }
 
 #category-area > * {
@@ -61,17 +64,18 @@ body {
   padding: 8px 14px;
   background: #e5e7eb;
   border-radius: 20px;
+  white-space: nowrap;
   font-size: 14px;
 }
 
 /* ===============================
-   메인 컨테이너
+   메인 컨테이너 (중요)
 ================================ */
 
 #wrap {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 132px 12px 0;
+  padding: 132px 12px 0; /* 헤더+카테고리 높이 */
 }
 
 /* ===============================
@@ -82,6 +86,19 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
+  padding: 12px 0;
+}
+
+@media (min-width: 600px) {
+  #product-area {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  #product-area {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* ===============================
@@ -91,64 +108,85 @@ body {
 .product-card {
   background: white;
   border-radius: 12px;
+  position: relative;
 }
 
 .product-card img {
-  width: 100%;
   display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-card > * {
+  padding: 8px 12px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.product-badge img {
+  width: 40px;
+  height: 40px;
+}
+
+.product-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  height: 34px; /* 2줄 고정 */
+  overflow: hidden;
 }
 
 /* ===============================
-   계좌 안내
+   ✅ 앱(WebView)에서만 터지는 텍스트/박스 overflow 방지
+   (웹에도 무해)
 ================================ */
 
-.bank-info-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* 배너/특가/계좌 박스는 컨테이너 폭 100%로 강제 */
+#banner-area,
+#today-deal,
+.bank-info-box,
+#product-section {
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* 계좌번호 줄바꿈 강제 (박스 밖으로 튀는 문제 해결) */
 #bankDynamic {
   white-space: normal;
-  word-break: break-word;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
+/* 혹시 bank-info-box 내부가 flex면 텍스트가 줄바꿈 안되는 경우가 있어서 안전장치 */
+.bank-text, #bankDynamic {
+  min-width: 0;
+}
 /* =====================================================
-   📱 모바일 + 앱(WebView) 전용 (핵심 수정)
+   📱 모바일 브라우저 전용 보정 (웹/앱 무손상)
 ===================================================== */
+@media screen and (max-width: 480px) {
 
-@media (hover: none) and (pointer: coarse) {
-
-  /* 🔥 배너 완전 제거 */
+  /* 배너 + 문구 숨김 (모바일 브라우저만) */
   #banner-area,
   #banner-text-overlay {
-    display: none !important;
+    display: none;
   }
 
-  /* 🔥 중앙정렬 구조 제거 (우측 여백 원인 차단) */
-  #fixed-header {
-    left: 0 !important;
-    transform: none !important;
-    max-width: 100% !important;
-  }
-
-  #fixed-header-inner,
-  #wrap,
-  #category-area {
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-
-  /* 🔥 모바일에서는 계좌 박스 세로 정렬 */
-  .bank-info-box {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  /* 🔥 가로 스크롤 완전 차단 */
+  /* 우측 여백 방지 */
   html, body {
     overflow-x: hidden;
   }
+
+  /* 계좌번호 줄바꿈 강화 (flex 구조 유지) */
+  #bankDynamic {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+  }
+
 }
