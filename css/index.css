@@ -164,29 +164,7 @@ body {
 }
 
 /* 혹시 bank-info-box 내부가 flex면 텍스트가 줄바꿈 안되는 경우가 있어서 안전장치 */
-.bank-text, #bankDynamic {
+.bank-text,
+#bankDynamic {
   min-width: 0;
-}
-/* =====================================================
-   📱 모바일 브라우저 전용 보정 (웹/앱 무손상)
-===================================================== */
-@media screen and (max-width: 480px) {
-
-  /* 배너 + 문구 숨김 (모바일 브라우저만) */
-  #banner-area,
-  #banner-text-overlay {
-    display: none;
-  }
-
-  /* 우측 여백 방지 */
-  html, body {
-    overflow-x: hidden;
-  }
-
-  /* 계좌번호 줄바꿈 강화 (flex 구조 유지) */
-  #bankDynamic {
-    word-break: break-all;
-    overflow-wrap: anywhere;
-  }
-
 }
