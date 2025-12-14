@@ -125,6 +125,15 @@
 
   </div>
 
+  <!-- ✅ 빈 장바구니 진입 차단 (웹 전용, UI 영향 없음) -->
+  <script>
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (!Array.isArray(cartData) || cartData.length === 0) {
+      location.href = 'index.html';
+    }
+  </script>
+
   <script type="module" src="./js/cart.js"></script>
 
 </body>
