@@ -1,4 +1,14 @@
 /* ===========================================================
+   🚫 빈 장바구니 진입 차단 (가장 먼저 실행)
+   - UI 그리기 전에 바로 메인으로 이동
+=========================================================== */
+const __cartBlockCheck = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+if (!Array.isArray(__cartBlockCheck) || __cartBlockCheck.length === 0) {
+  location.href = "index.html";
+}
+
+/* ===========================================================
    🛒 장바구니 로드
 =========================================================== */
 function loadCart() {
@@ -6,7 +16,7 @@ function loadCart() {
   const listArea = document.getElementById("cartList");
   const totalArea = document.getElementById("cartTotal");
 
-  // 장바구니 비었을 때
+  // 장바구니 비었을 때 (이론상 여기까지 올 일 없음)
   if (cart.length === 0) {
     listArea.innerHTML = `
       <div style="text-align:center; padding:40px 0; color:#666; font-size:18px;">
@@ -47,7 +57,7 @@ function loadCart() {
   listArea.innerHTML = html;
 
   totalArea.innerHTML = `
-    총 수량: ${cart.reduce((t,i)=>t+i.qty,0)}개<br>
+    총 수량: ${cart.reduce((t, i) => t + i.qty, 0)}개<br>
     총 금액: ${totalPrice.toLocaleString()}원
   `;
 }
@@ -65,7 +75,6 @@ window.changeQty = function (index, diff) {
 
   loadCart();
 
-  // index.js와 연동될 경우 카운트 업데이트
   if (window.updateCartCount) updateCartCount();
   if (window.updateCartPreview) updateCartPreview();
 };
@@ -102,4 +111,3 @@ document.getElementById("goOrder").addEventListener("click", () => {
    🚀 초기 실행
 =========================================================== */
 loadCart();
-
