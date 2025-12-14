@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>장바구니</title>
 
+  <!-- ✅ 빈 장바구니 진입 차단 (렌더링 이전 실행) -->
+  <script>
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (!Array.isArray(cartData) || cartData.length === 0) {
+      location.replace('index.html');
+    }
+  </script>
+
   <!-- 메인 CSS 재사용 -->
   <link rel="stylesheet" href="css/index.css">
 
@@ -109,30 +118,13 @@
 <body>
 
   <div id="cart-wrap">
-
     <h2 style="text-align:center; margin-bottom:20px;">🛒 장바구니</h2>
-
-    <!-- 장바구니 목록 -->
     <div id="cartList"></div>
-
-    <!-- 합계 -->
     <div id="cart-total-area">
       <div id="cartTotal"></div>
     </div>
-
-    <!-- 주문하기 -->
     <button id="goOrder">주문하기</button>
-
   </div>
-
-  <!-- ✅ 빈 장바구니 진입 차단 -->
-  <script>
-    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (!Array.isArray(cartData) || cartData.length === 0) {
-      location.href = 'index.html';
-    }
-  </script>
 
   <script type="module" src="./js/cart.js"></script>
 
