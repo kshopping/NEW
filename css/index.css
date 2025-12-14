@@ -132,6 +132,7 @@ body {
   width: 40px;
   height: 40px;
 }
+
 .product-title {
   font-size: 14px;
   font-weight: bold;
@@ -140,12 +141,12 @@ body {
   height: 34px; /* 2줄 고정 */
   overflow: hidden;
 }
+
 /* ===============================
    ✅ 앱(WebView)에서만 터지는 텍스트/박스 overflow 방지
    (웹에도 무해)
 ================================ */
 
-/* 배너/특가/계좌 박스는 컨테이너 폭 100%로 강제 */
 #banner-area,
 #today-deal,
 .bank-info-box,
@@ -154,14 +155,49 @@ body {
   box-sizing: border-box;
 }
 
-/* 계좌번호 줄바꿈 강제 (박스 밖으로 튀는 문제 해결) */
 #bankDynamic {
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* 혹시 bank-info-box 내부가 flex면 텍스트가 줄바꿈 안되는 경우가 있어서 안전장치 */
-.bank-text, #bankDynamic {
+.bank-text,
+#bankDynamic {
   min-width: 0;
+}
+
+/* =====================================================
+   📱 모바일 전용 UI 최종 보정 (지니 작업 영역)
+   ❗ PC / 앱 영향 없음
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* 1️⃣ 모바일에서 배너 + 배너 문구 제거 */
+  #banner-area,
+  #banner-text-overlay {
+    display: none !important;
+  }
+
+  /* 2️⃣ 메인 래퍼 중앙 정렬 보정 */
+  #wrap {
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 3️⃣ 주요 섹션 중앙 정렬 */
+  #today-deal,
+  .bank-info-box,
+  #product-section {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 4️⃣ 은행 안내 박스 시각 중심 보정 */
+  .bank-info-box {
+    text-align: center;
+  }
+
 }
