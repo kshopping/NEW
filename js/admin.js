@@ -650,3 +650,23 @@ window.deleteDetailImage = async function (productId) {
 window.editProduct = function (id) {
   location.href = `product_edit.html?id=${id}`;
 };
+/* ===========================================================
+   🔥 상품 삭제 기능 (복구)
+=========================================================== */
+window.deleteProduct = async function (id) {
+  if (!confirm("이 상품을 삭제하시겠습니까?")) return;
+
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    alert("상품 삭제 실패!");
+    return;
+  }
+
+  alert("상품이 삭제되었습니다.");
+  loadProductPage();
+};
